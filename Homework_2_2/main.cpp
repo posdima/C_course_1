@@ -23,10 +23,9 @@ int main()
     square_area = pow(square_side,2);
     printf("Square area = %.2lf\n", square_area);
 
-    (circle_square>triangle_square&&square_area)?(printf("Circle square is the biggest\n")):(triangle_square>circle_square&&square_area)?(printf("Equilateral triangle square is the biggest\n")):(printf("Square area is the biggest\n"));
-
-
-
+    (circle_square > triangle_square) ? (circle_square > square_area ? printf ("Circle ") : printf ("Square ")) : (
+                triangle_square > square_area ? printf ("triangle ") : printf ("Square "));
+        printf ("area is the biggest\n");
 
     return 0;
 }
