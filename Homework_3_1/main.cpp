@@ -8,12 +8,11 @@ int main()
     scanf("%d", &N);
     int counter = 0;
 
-    do
+    while(N%10 != 0)
     {
-        N /= 10;
+        N/=10;
         counter++;
     }
-    while(N%10 != 0);
 
     printf("N consists of %d numbers\n", counter);
 
