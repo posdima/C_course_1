@@ -7,7 +7,7 @@ int main()
 {
     printf("Enter natural two-digit or more number: ");
     int number;
-    scanf("%d\n", &number);
+    scanf("%d", &number);
 
     if(number < 10)
     {
