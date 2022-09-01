@@ -11,14 +11,20 @@ int main()
     int c;
     scanf("%d%d%d", &a, &b, &c);
 
-    for(int i=2; ;++i)
+    int max;
+    max = a > b ? a : b;
+    max = max > c ? max : c;
+
+    for(int i=2; i < max; ++i)
     {
         if((a%i==0)&&(b%i==0)&&(c%i==0))
         {
             printf("The least common divisor is: %d\n", i);
+            return 0;
         }
     }
 
+    printf("The least common divisor is 1");
+
     return 0;
 }
-
