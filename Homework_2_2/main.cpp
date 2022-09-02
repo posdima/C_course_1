@@ -4,10 +4,10 @@
 
 //DZ-2. Programma opredelenja ploscahdi figury i sravnenia ih mezhdu soboj
 
-int main()
-{
+int main () {
     double radius, triangle_side, square_side;
     double circle_square, triangle_square, square_area;
+
 
     printf("Enter circle radius R = ");
     scanf("%lf", &radius);
@@ -27,6 +27,7 @@ int main()
     (circle_square > triangle_square) ? (circle_square > square_area ? printf ("Circle ") : printf ("Square ")) : (
                 triangle_square > square_area ? printf ("triangle ") : printf ("Square "));
         printf ("area is the biggest\n");
+
 
     return 0;
 }
