@@ -1,37 +1,24 @@
-#include <math.h>
-#include <stdio.h>
 /*Программа, меняющая местами цифры старшего и младшего разрядов данного натурального числа
 (например, из числа 3879 получится 9873)*/
 
+#include "change_digits.h"
+#include <stdio.h>
+
 int main()
 {
-    printf("Enter natural two-digit or more number: ");
+    printf("Enter natural two-digit number more than 11: ");
     int number;
     scanf("%d", &number);
 
-    if(number < 10)
+    if(number < 12)
     {
-        printf("You have entered one-digit number!");
+        printf("You have entered wrong number!");
+        return 0;
     }
 
-    int last;
-    last = number % 10;
+    const int result = changeDigits(number);
 
-    int first;
-    first = number;
-
-    int counter;
-    counter = 0;
-
-    while(first > 10)
-    {
-        first /= 10;
-        ++counter;
-    }
-
-    number += (first - last) + (last - first) * pow(10, counter);
-
-    printf("Converted number is: %d\n", number);
+    printf("Converted number is: %d\n", result);
 
     return 0;
 }
