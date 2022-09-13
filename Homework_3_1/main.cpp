@@ -9,7 +9,15 @@ int main()
     int N;
     scanf("%d", &N);
 
-    numberCounter(N);
+    if(N <= 0)
+    {
+        printf("It's not a natural number!");
+        return 0;
+    }
+
+    const int result = numberCounter(N);
+
+    printf("N consists of %d numbers\n", result);
 
     return 0;
 }
