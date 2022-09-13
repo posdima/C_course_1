@@ -3,7 +3,6 @@
 когда других общих делителей у заданных чисел нет)*/
 
 #include "least_divisor.h"
-#include <math.h>
 #include <stdio.h>
 
 int main()
