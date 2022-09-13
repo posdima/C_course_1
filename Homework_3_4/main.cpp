@@ -1,25 +1,23 @@
-#include <math.h>
+//Программа перевода числа из десятичной системы счисления в двоичную
+
+#include "binary_number.h"
 #include <stdio.h>
-//Программа перевода числа из десятичной системы счисления в двоичную.
 
 int main()
 {
-    printf("Enter decimal number: ");
+    printf("Enter decimal non-negative number: ");
     int decimal_number;
     scanf("%d", &decimal_number);
-    int binary_number = 0;
 
-    int counter;
-    counter = 0;
-
-    while(decimal_number>0)
+    if(decimal_number < 0)
     {
-        binary_number += (decimal_number%2) * pow(10, counter);
-        decimal_number/=2;
-        ++counter;
+        printf("You have entered negative number!");
+        return 0;
     }
 
-    printf("This number in binary system is: %d\n", binary_number);
+    const int result = binaryNumber(decimal_number);
+
+    printf("This number in binary system is: %d\n", result);
 
     return 0;
 }
