@@ -1,5 +1,4 @@
 #include "number_counter.h"
-#include <stdio.h>
 
 int numberCounter(int N)
 {
