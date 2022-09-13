@@ -1,18 +1,7 @@
-#include <math.h>
-#include <stdio.h>
 //Сумма рядка с точностью 10^-5, где 0.05<x<1
 
-#define INPUT_MIN 0.05
-#define INPUT_MAX 1
-
-int inputValid(double x)
-{
-    if(INPUT_MIN < x && x < INPUT_MAX)
-    {
-        return 1;
-    }
-    return 0;
-}
+#include "row_sum.h"
+#include <stdio.h>
 
 int main()
 {
@@ -20,32 +9,15 @@ int main()
     double x;
     scanf("%lf", &x);
 
-    if(!inputValid(x))
+    if(x <= 0.05 || x >= 1)
     {
         printf("You have entered wrong number!");
-        return EXIT_FAILURE;
+        return 0;
     }
 
-    double row = 1;
-    double sum = x;
+    const double result = rowSum(x);
 
-    int fact1;
-    int fact2;
+    printf("Sum is: %lf\n", result);
 
-    for(int i = 1; row > 0.00001; ++i)
-    {
-        fact1 = 1;
-        fact1 *= (2 * i -1);
-
-        fact2 = 1;
-        fact2 *= 2 * i;
-
-        row *= (fact1 * pow(x, (2 * i + 1))) / (fact2 * (2 * i + 1));
-
-        sum += row;
-    }
-
-    printf("Sum is: %lf\n", sum);
-
-    return EXIT_SUCCESS;
+    return 0;
 }
