@@ -12,7 +12,7 @@ int main()
     if(N <= 0)
     {
         printf("It's not a natural number!");
-        return 0;
+        return -1;
     }
 
     const int result = numberCounter(N);
