@@ -27,9 +27,3 @@ TEST(BracketsCheckTest, BracketTest4)
     char str[] = {')', '(',};
     EXPECT_EQ(bracketsCheck((char*) str), -1);
 }
-
-TEST(BracketsCheckTest, LetterTest)
-{
-    char str[] = {'2'};
-    EXPECT_EQ(bracketsCheck((char*) str), -1);
-}
