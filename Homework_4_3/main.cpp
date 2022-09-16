@@ -1,8 +1,9 @@
 //Дана матрица размером 7х7. Поменять местами k-й столбец с k-ой строкой
 
+
+#include "matrix_manager.h"
+#include "swap_matrix.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 int main()
 {
@@ -13,17 +14,8 @@ int main()
 
     int M[row_size][col_size];
 
-    srand(time(nullptr));
-
-    for(int i = 0; i < row_size; ++i)
-    {
-        for(int j = 0; j < col_size; ++j)
-        {
-            M[i][j] = rand() % 21 - 10;
-            printf("%d\t", M[i][j]);
-        }
-        printf("\n");
-    }
+    fillMatrix(reinterpret_cast<int*>(M), row_size, col_size);
+    printMatrix(reinterpret_cast<int*>(M), row_size, col_size);
 
     printf("\nEnter number of row and column, which you want to change with each other: ");
     int k;
@@ -33,23 +25,11 @@ int main()
     int k_row = k - 1;
     int k_col = k - 1;
 
-    for(int i = 0, j = 0; i < row_size && j < col_size; ++i, ++j)
-    {
-        int change = M[k_row][j];
-        M[k_row][j] = M[i][k_col];
-        M[i][k_col] = change;
-    }
+    swapMatrix(reinterpret_cast<int*>(M), row_size, col_size, k_row, k_col);
 
     printf("\nChanged array:\n\n");
 
-    for(int i = 0; i < row_size ; ++i)
-    {
-        for(int j = 0; j < col_size; ++j)
-        {
-            printf("%d\t", M[i][j]);
-        }
-        printf("\n");
-    }
+    printMatrix(reinterpret_cast<int*>(M), row_size, col_size);
 
     return 0;
 }
