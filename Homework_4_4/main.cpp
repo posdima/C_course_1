@@ -1,8 +1,8 @@
 //Вычислить сумму элементов матрицы, лежащих слева от побочной диагонали
 
+#include "matrix_manager.h"
+#include "matrix_sum.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 int main()
 {
@@ -16,29 +16,10 @@ int main()
 
     int M[row_size][col_size];
 
-    srand(time(nullptr));
+    fillMatrix(reinterpret_cast<int*>(M), row_size, col_size);
+    printMatrix(reinterpret_cast<int*>(M), row_size, col_size);
 
-    for(int i = 0; i < row_size; ++i)
-    {
-        for(int j = 0; j < col_size; ++j)
-        {
-            M[i][j] = rand() % 10;
-            printf("%d\t", M[i][j]);
-        }
-        printf("\n");
-    }
-
-    int sum = 0;
-    int cut = col_size - 1;
-
-    for(int i = 0; i < row_size - 1; ++i)
-    {
-        for(int j = 0; j < cut; ++j)
-        {
-            sum += M[i][j];
-        }
-        --cut;
-    }
+    const int sum = matrixSum(reinterpret_cast<int*>(M), row_size, col_size);
 
     printf("\nSum of elements from the left side of matrix diagonal is: %d", sum);
 
