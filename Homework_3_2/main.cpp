@@ -19,7 +19,9 @@ int main()
         return 0;
     }
 
-    least_divisor(a, b, c);
+    const int result = least_divisor(a, b, c);
+
+    printf("The least common divisor is: %d\n", result);
 
     return 0;
 }

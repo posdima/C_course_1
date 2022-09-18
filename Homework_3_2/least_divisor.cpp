@@ -3,19 +3,18 @@
 
 int least_divisor(int a, int b, int c)
 {
-    int max;
-    max = a > b ? a : b;
-    max = max > c ? max : c;
+    int result = 1;
+    int min;
+    min = a < b ? a : b;
+    min = min < c ? min : c;
 
-    for(int i=2; i < max; ++i)
+    for(int i = min; i > 1; --i)
     {
         if((a % i == 0) && (b % i == 0) && (c % i == 0))
         {
-            printf("The least common divisor is: %d\n", i);
-            return i;
+            result = i;
         }
     }
 
-    printf("The least common divisor is 1");
-    return 1;
+    return result;
 }
