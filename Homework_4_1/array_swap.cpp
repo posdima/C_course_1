@@ -17,6 +17,16 @@ void swap(int* M, int x)
     while(M[i] >= 0)
     {
         --i;
+
+        if(M[i] < 0)
+        {
+            break;
+        }
+
+        else
+        {
+            return;
+        }
     }
 
     last_negative = i;
