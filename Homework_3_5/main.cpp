@@ -12,7 +12,7 @@ int main()
     if(x <= 0.05 || x >= 1)
     {
         printf("You have entered wrong number!");
-        return 0;
+        return 1;
     }
 
     const double result = rowSum(x);
