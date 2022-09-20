@@ -20,7 +20,7 @@ int bracketsCheck(char *str)
             if(str[0] == ')')
             {
                 printf("You've started with wrong bracket! First bracket should be ( !");
-                return -1;
+                return 1;
             }
         }
 

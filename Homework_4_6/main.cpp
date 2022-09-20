@@ -14,7 +14,7 @@ int main()
     if (strlen(str) == 0)
     {
         printf("You haven't entered bracket expression");
-        return -1;
+        return 1;
     }
 
     for(int j = 0; str[j] != '\0'; ++j)
@@ -22,7 +22,7 @@ int main()
         if(str[j] != '(' && str[j] != ')')
         {
             printf("Use only ( or ) brackets!");
-            return -1;
+            return 1;
         }
     }
 
