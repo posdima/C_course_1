@@ -1,19 +1,33 @@
 #include "change_digits.h"
-#include <math.h>
+#include <stdio.h>
 
-int changeDigits(int number)
+void changeDigits(int number)
 {
-    int last = number % 10;
-    int first = number;
     int counter = 0;
+    int digits_number = number;
 
-    while(first > 10)
+    while(digits_number > 0)
     {
-        first /= 10;
+        digits_number /= 10;
         ++counter;
     }
 
-    number += (first - last) + (last - first) * pow(10, counter);
+    int* M = new int [counter];
 
-    return number;
+    for(int i = counter - 1; i >= 0; --i)
+    {
+        M[i] = number % 10;
+        number /= 10;
+    }
+
+    int change = M[0];
+    M[0] = M[(counter - 1)];
+    M[(counter - 1)] = change;
+
+    for(int i = 0; i < counter; ++i)
+    {
+        printf("%d", M[i]);
+    }
+
+    delete [] M;
 }

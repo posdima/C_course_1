@@ -6,19 +6,17 @@
 
 int main()
 {
-    printf("Enter natural two-digit number more than 11: ");
+    printf("Enter natural two-digit number: ");
     int number;
     scanf("%d", &number);
 
-    if(number < 12)
+    if(number < 10)
     {
         printf("You have entered wrong number!");
-        return 0;
+        return 1;
     }
 
-    const int result = changeDigits(number);
-
-    printf("Converted number is: %d\n", result);
+    changeDigits(number);
 
     return 0;
 }
