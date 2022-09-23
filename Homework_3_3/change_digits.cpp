@@ -1,7 +1,7 @@
 #include "change_digits.h"
 #include <stdio.h>
 
-void changeDigits(int number)
+int digits_number(int number)
 {
     int counter = 0;
     int digits_number = number;
@@ -12,22 +12,18 @@ void changeDigits(int number)
         ++counter;
     }
 
-    int* M = new int [counter];
+    return counter;
+}
 
-    for(int i = counter - 1; i >= 0; --i)
+void changeDigits(int* M, int number, int size)
+{
+    for(int i = size - 1; i >= 0; --i)
     {
         M[i] = number % 10;
         number /= 10;
     }
 
     int change = M[0];
-    M[0] = M[(counter - 1)];
-    M[(counter - 1)] = change;
-
-    for(int i = 0; i < counter; ++i)
-    {
-        printf("%d", M[i]);
-    }
-
-    delete [] M;
+    M[0] = M[(size - 1)];
+    M[(size - 1)] = change;
 }

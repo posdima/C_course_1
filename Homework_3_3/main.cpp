@@ -6,7 +6,7 @@
 
 int main()
 {
-    printf("Enter natural two-digit number: ");
+    printf("Enter natural two-digit or more number: ");
     int number;
     scanf("%d", &number);
 
@@ -16,7 +16,18 @@ int main()
         return 1;
     }
 
-    changeDigits(number);
+    const int size = digits_number(number);
+
+    int* M = new int [size];
+
+    changeDigits(reinterpret_cast<int*>(M), number, size);
+
+    for(int i = 0; i < size; ++i)
+    {
+        printf("%d", M[i]);
+    }
+
+    delete [] M;
 
     return 0;
 }
