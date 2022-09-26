@@ -15,10 +15,12 @@ int main()
     if (strlen(str) == 0)
     {
         printf("You haven't entered the string of letters!");
-        return -1;
+        return 1;
     }
 
-    wordDelete (str);
+    wordDelete(str);
+
+    printf("%s", str);
 
     return 0;
 }
