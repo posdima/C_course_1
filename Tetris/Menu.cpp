@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Helper.h"
 #include "Palette.h"
 #include <curses.h>
 #include <string.h>
@@ -25,32 +26,9 @@ void PrintMenu(Menu* menu)
         return;
     }
 
-    attron(COLOR_PAIR(MENU_POL));
+    attron(COLOR_PAIR(MENU_PALETTE));
 
-    for(int i = 25; i < menu->gameSize.width; ++i)
-    {
-        for(int j = 0; j < menu->gameSize.height; ++j)
-        {
-            move(j, i);
-
-            if ((i == 25 && j == 0) ||
-                (i == 25 && j ==  menu->gameSize.height - 1) ||
-                (i == menu->gameSize.width - 1 && j == 0) ||
-                (i == menu->gameSize.width - 1 && j == menu->gameSize.height - 1))
-            {
-                addch('*');
-            }
-            else if (j == 0 || j == menu->gameSize.height - 1)
-            {
-                addch('*');
-            }
-            else if (i == 25 || i == menu->gameSize.width - 1)
-            {
-                addch('*');
-            }
-            addch(' ');
-        }
-    }
+    PrintBorder(menu->gameSize.width, menu->gameSize.height);
 
     for (int i = 0; i < Menu::COUNT; ++i) {
         mvprintw(menu->gameSize.height / 2.3 + i,
@@ -68,7 +46,7 @@ void PrintMenu(Menu* menu)
     move(y, x + currentNameLenght);
     addch('*');
 
-    attroff(COLOR_PAIR(MENU_POL));
+    attroff(COLOR_PAIR(MENU_PALETTE));
 }
 
 GameState RunMenu(Menu* menu, Menu::MenuKey key)

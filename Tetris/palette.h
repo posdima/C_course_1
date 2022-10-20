@@ -4,7 +4,8 @@
 enum Palette
 {
     BOARD_PALETTE = 1,
-    MENU_POL
+    MENU_PALETTE,
+    TETRAMINO_PALETTE
 };
 
 void InitPalette();

@@ -4,6 +4,8 @@
 #include "Board.h"
 #include "GameState.h"
 #include "Menu.h"
+#include "Tetramino.h"
+
 
 struct Game
 {
@@ -11,6 +13,7 @@ struct Game
     GameSize gameSize;
     Board* board;
     Menu* menu;
+    Tetramino* tetramino;
 };
 
 Game* CreateGame();
