@@ -16,6 +16,7 @@ void PrintGameSubModules(Game* game)
         break;
     case BOARD:
         PrintBoard(game->board);
+        MoveTetramino(game->tetramino);
         PrintTetramino(game->tetramino);
         break;
     case EXIT:
@@ -53,26 +54,32 @@ GameState RunGameSubModules(Game* game)
         return RunMenu(game->menu, menuKey);
 
     case BOARD:
+    {
         switch(ch)
         {
         case 27:
-            //return RunBoard(game->board, Board::ESC);
-        case KEY_DOWN:
-            //return RunTetramino(game->tetramino, Tetramino::DOWN);
-        case KEY_LEFT:
-            //return RunTetramino(game->tetramino, Tetramino::LEFT);
-        case KEY_RIGHT:
-            //return RunTetramino(game->tetramino, Tetramino::RIGHT);
+            return RunBoard(game->board, Board::ESC);
+//        case KEY_DOWN:
+//            direction = Tetramino::DOWN;
+//            break;
+//        case KEY_LEFT:
+//            direction = Tetramino::LEFT;
+//            break;
+//        case KEY_RIGHT:
+//            direction = Tetramino::RIGHT;
+//            break;
         case -1:
-            //return RunTetramino(game->tetramino, Tetramino::DOWN);
+            break;
         default:
             return game->state;
         }
-
+    }
     case EXIT:
         return game->state;
     }
+        return game->state;
 }
+
 
 Game* CreateGame()
 {
@@ -88,7 +95,7 @@ Game* CreateGame()
     game->gameSize = {55, 24};
     game->board = CreateBoard(game->gameSize);
     game->menu = CreateMenu(game->gameSize);
-    //game->tetramino = CreateTetramino();
+    game->tetramino = CreateTetramino(1);
     return game;
 }
 

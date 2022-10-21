@@ -22,7 +22,7 @@ void PrintBoard(Board* board)
         return;
     }
 
-    attron(COLOR_PAIR(BOARD_PALETTE));
+    attron(COLOR_PAIR(MENU_PALETTE));
 
     for(int i = 25; i < board->gameSize.width; ++i) {
         for(int j = 0; j < board->gameSize.height; ++j) {
