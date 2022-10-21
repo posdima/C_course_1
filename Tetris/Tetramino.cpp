@@ -21,6 +21,47 @@ static int figure_1[4][4] = {
     {0, 0, 0, 0}
 };
 
+static int figure_2[4][4] = {
+    {0, 1, 0, 0},
+    {1, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 0, 0, 0}
+};
+
+static int figure_3[4][4] = {
+    {0, 1, 1, 0},
+    {0, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 0, 0, 0}
+};
+
+static int figure_4[4][4] = {
+    {0, 1, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 0, 0}
+};
+
+static int figure_5[4][4] = {
+    {0, 0, 1, 0},
+    {0, 1, 1, 0},
+    {0, 1, 0, 0},
+    {0, 0, 0, 0}
+};
+
+static int figure_6[4][4] = {
+    {0, 1, 0, 0},
+    {0, 1, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 0, 0}
+};
+
+static int figure_7[4][4] = {
+    {0, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 1, 0, 0}
+};
 
 Tetramino* CreateTetramino(int id)
 {
@@ -107,10 +148,25 @@ void MoveTetramino(Tetramino* tetramino)
 //        tetramino->figure[i][j] = tetramino->figure[i][j-1];
 //    }
 
-//    int ch = getch();
+    int ch = getch();
+
+    switch(ch)
+    {
+    case KEY_DOWN:
+        ++(tetramino->position.y);
+        break;
+    case KEY_LEFT:
+        --(tetramino->position.x);
+        break;
+    case KEY_RIGHT:
+        ++(tetramino->position.x);
+        break;
+//    default:
+//        return game->state;
+    }
 
 
-     ++(tetramino->position.y);
+//    ++(tetramino->position.y);
 
 
 //    switch(tetramino->direction)
