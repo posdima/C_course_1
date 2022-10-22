@@ -66,8 +66,8 @@ static int figure_7[4][4] = {
 Tetramino* CreateTetramino(int id)
 {
     Tetramino* figure = new Tetramino;
-//    int randomFigure;
-//    randomFigure = rand() % 7 + 1;
+    //    int randomFigure;
+    //    randomFigure = rand() % 7 + 1;
 
     figure->position.x = 30;
     figure->position.y = 1;
@@ -77,22 +77,22 @@ Tetramino* CreateTetramino(int id)
     return figure;
 
     switch (id) {
-//    case 1: memcpy(figure->figure, figure_1, sizeof(figure_1));
-//        break;
-//    case 2: tetramino->figure_2;
-//        break;
-//    case 3: tetramino->figure_3;
-//        break;
-//    case 4: tetramino->figure_4;
-//        break;
-//    case 5: tetramino->figure_5;
-//        break;
-//    case 6: tetramino->figure_6;
-//        break;
-//    case 7: tetramino->figure_7;
-//        break;
-//    }
-}
+    //    case 1: memcpy(figure->figure, figure_1, sizeof(figure_1));
+    //        break;
+    //    case 2: tetramino->figure_2;
+    //        break;
+    //    case 3: tetramino->figure_3;
+    //        break;
+    //    case 4: tetramino->figure_4;
+    //        break;
+    //    case 5: tetramino->figure_5;
+    //        break;
+    //    case 6: tetramino->figure_6;
+    //        break;
+    //    case 7: tetramino->figure_7;
+    //        break;
+    //    }
+    }
 }
 
 void DestroyTetramino(Tetramino* tetramino)
@@ -119,7 +119,7 @@ void PrintTetramino(Tetramino* tetramino)
 }
 
 
-    /*for (int i = 0; i < tetramino->tetraminoSize; ++i)
+/*for (int i = 0; i < tetramino->tetraminoSize; ++i)
     {
         move(tetramino->figure[i].y, tetramino->figure[i].x);
         addch('#');
@@ -141,12 +141,25 @@ void PrintTetramino(Tetramino* tetramino)
 
 void MoveTetramino(Tetramino* tetramino)
 {
-//    int i = 30;
+    //    int i = 30;
 
-//    for (int j = tetramino->position.y - 1; j >= 1; --j)
+    //    for (int j = tetramino->position.y - 1; j >= 1; --j)
+    //    {
+    //        tetramino->figure[i][j] = tetramino->figure[i][j-1];
+    //    }
+
+    ++(tetramino->position.y);
+
+//    if ((tetramino->position.y >= 22) && ((tetramino->position.x >= 56) || (tetramino->position.x < 25)))
 //    {
-//        tetramino->figure[i][j] = tetramino->figure[i][j-1];
-//    }
+//            addch(' ');
+//}
+
+//        for(int i = 25; i < width; ++i)
+//            {
+//                for(int j = 0; j < height; ++j)
+//                {
+//                    move(j, i);
 
     int ch = getch();
 
@@ -165,22 +178,27 @@ void MoveTetramino(Tetramino* tetramino)
 //        return game->state;
     }
 
-
-//    ++(tetramino->position.y);
-
-
-//    switch(tetramino->direction)
+//    if (tetramino->position.y = 21)
 //    {
-//    case Tetramino::DOWN:
-//        ++(tetramino->position.y);
-//        break;
-//    case Tetramino::LEFT:
-//        --(tetramino->position.x);
-//        break;
-//    case Tetramino::RIGHT:
-//        ++(tetramino->position.x);
 //        break;
 //    }
+
+
+    //    ++(tetramino->position.y);
+
+
+    //    switch(tetramino->direction)
+    //    {
+    //    case Tetramino::DOWN:
+    //        ++(tetramino->position.y);
+    //        break;
+    //    case Tetramino::LEFT:
+    //        --(tetramino->position.x);
+    //        break;
+    //    case Tetramino::RIGHT:
+    //        ++(tetramino->position.x);
+    //        break;
+    //    }
 }
 
 
