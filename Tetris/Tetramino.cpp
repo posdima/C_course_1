@@ -21,53 +21,62 @@ static int figure_1[4][4] = {
     {0, 0, 0, 0}
 };
 
-static int figure_2[4][4] = {
-    {0, 1, 0, 0},
-    {1, 1, 0, 0},
-    {0, 1, 0, 0},
-    {0, 0, 0, 0}
-};
+//static int figure_2[4][4] = {
+//    {0, 1, 0, 0},
+//    {1, 1, 0, 0},
+//    {0, 1, 0, 0},
+//    {0, 0, 0, 0}
+//};
 
-static int figure_3[4][4] = {
-    {0, 1, 1, 0},
-    {0, 1, 0, 0},
-    {0, 1, 0, 0},
-    {0, 0, 0, 0}
-};
+//static int figure_3[4][4] = {
+//    {0, 1, 1, 0},
+//    {0, 1, 0, 0},
+//    {0, 1, 0, 0},
+//    {0, 0, 0, 0}
+//};
 
-static int figure_4[4][4] = {
-    {0, 1, 1, 0},
-    {0, 0, 1, 0},
-    {0, 0, 1, 0},
-    {0, 0, 0, 0}
-};
+//static int figure_4[4][4] = {
+//    {0, 1, 1, 0},
+//    {0, 0, 1, 0},
+//    {0, 0, 1, 0},
+//    {0, 0, 0, 0}
+//};
 
-static int figure_5[4][4] = {
-    {0, 0, 1, 0},
-    {0, 1, 1, 0},
-    {0, 1, 0, 0},
-    {0, 0, 0, 0}
-};
+//static int figure_5[4][4] = {
+//    {0, 0, 1, 0},
+//    {0, 1, 1, 0},
+//    {0, 1, 0, 0},
+//    {0, 0, 0, 0}
+//};
 
-static int figure_6[4][4] = {
-    {0, 1, 0, 0},
-    {0, 1, 1, 0},
-    {0, 0, 1, 0},
-    {0, 0, 0, 0}
-};
+//static int figure_6[4][4] = {
+//    {0, 1, 0, 0},
+//    {0, 1, 1, 0},
+//    {0, 0, 1, 0},
+//    {0, 0, 0, 0}
+//};
 
-static int figure_7[4][4] = {
-    {0, 1, 0, 0},
-    {0, 1, 0, 0},
-    {0, 1, 0, 0},
-    {0, 1, 0, 0}
-};
+//static int figure_7[4][4] = {
+//    {0, 1, 0, 0},
+//    {0, 1, 0, 0},
+//    {0, 1, 0, 0},
+//    {0, 1, 0, 0}
+//};
 
 Tetramino* CreateTetramino(int id)
 {
     Tetramino* figure = new Tetramino;
     //    int randomFigure;
     //    randomFigure = rand() % 7 + 1;
+
+//    Point a[4];
+//    int n = 4;
+
+//    for (int i = 0; i < 4; i++)
+//    {
+//        a[i].x = figure->figures[n][i] % 2;
+//        a[i].y = figure->figures[n][i] / 2;
+//    }
 
     figure->position.x = 30;
     figure->position.y = 1;
@@ -105,6 +114,16 @@ void PrintTetramino(Tetramino* tetramino)
     if (!tetramino) {
         return;
     }
+
+//    Point a[4];
+//    int n = 4;
+
+//    for (int i = 0; i < 4; i++)
+//    {
+//        a[i].x = tetramino->figures[n][i] % 2;
+//        a[i].y = tetramino->figures[n][i] / 2;
+//        addch('#');
+//    }
 
     for (int i = 0; i < 4; ++i){
         for (int j = 0; j < 4; ++j){
@@ -148,7 +167,10 @@ void MoveTetramino(Tetramino* tetramino)
     //        tetramino->figure[i][j] = tetramino->figure[i][j-1];
     //    }
 
-    ++(tetramino->position.y);
+    do
+        ++(tetramino->position.y);
+    while(tetramino->position.y > 20);
+
 
 //    if ((tetramino->position.y >= 22) && ((tetramino->position.x >= 56) || (tetramino->position.x < 25)))
 //    {
@@ -177,6 +199,9 @@ void MoveTetramino(Tetramino* tetramino)
 //    default:
 //        return game->state;
     }
+
+
+
 
 //    if (tetramino->position.y = 21)
 //    {
