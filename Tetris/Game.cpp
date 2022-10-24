@@ -16,6 +16,7 @@ void PrintGameSubModules(Game* game)
         break;
     case BOARD:
         PrintBoard(game->board);
+        CreateTetramino();
         MoveTetramino(game->tetramino);
         PrintTetramino(game->tetramino);
         break;
@@ -95,7 +96,9 @@ Game* CreateGame()
     game->gameSize = {55, 24};
     game->board = CreateBoard(game->gameSize);
     game->menu = CreateMenu(game->gameSize);
-    game->tetramino = CreateTetramino(1);
+    game->tetramino = CreateTetramino();
+    PrintTetramino(game->tetramino);
+
     return game;
 }
 

@@ -6,7 +6,6 @@
 #include "Menu.h"
 #include "Tetramino.h"
 
-
 struct Game
 {
     GameState state;

@@ -2,17 +2,8 @@
 #include "Palette.h"
 #include <curses.h>
 #include <stdlib.h>
+#include <time.h>
 #include <memory.h>
-
-/*Tetramino_Generator* CreateFigure(Tetramino )
-{
-    int randomFigure;
-    randomFigure = rand() % 7 + 1;
-
-    tetramino_generator->allFigures[(randomFigure)];
-
-    return tetramino_generator;
-};*/
 
 static int figure_1[4][4] = {
     {0, 0, 0, 0},
@@ -21,53 +12,74 @@ static int figure_1[4][4] = {
     {0, 0, 0, 0}
 };
 
-//static int figure_2[4][4] = {
-//    {0, 1, 0, 0},
-//    {1, 1, 0, 0},
-//    {0, 1, 0, 0},
-//    {0, 0, 0, 0}
-//};
+static int figure_2[4][4] = {
+    {0, 1, 0, 0},
+    {1, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 0, 0, 0}
+};
 
-//static int figure_3[4][4] = {
-//    {0, 1, 1, 0},
-//    {0, 1, 0, 0},
-//    {0, 1, 0, 0},
-//    {0, 0, 0, 0}
-//};
+static int figure_3[4][4] = {
+    {0, 1, 1, 0},
+    {0, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 0, 0, 0}
+};
 
-//static int figure_4[4][4] = {
-//    {0, 1, 1, 0},
-//    {0, 0, 1, 0},
-//    {0, 0, 1, 0},
-//    {0, 0, 0, 0}
-//};
+static int figure_4[4][4] = {
+    {0, 1, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 0, 0}
+};
 
-//static int figure_5[4][4] = {
-//    {0, 0, 1, 0},
-//    {0, 1, 1, 0},
-//    {0, 1, 0, 0},
-//    {0, 0, 0, 0}
-//};
+static int figure_5[4][4] = {
+    {0, 0, 1, 0},
+    {0, 1, 1, 0},
+    {0, 1, 0, 0},
+    {0, 0, 0, 0}
+};
 
-//static int figure_6[4][4] = {
-//    {0, 1, 0, 0},
-//    {0, 1, 1, 0},
-//    {0, 0, 1, 0},
-//    {0, 0, 0, 0}
-//};
+static int figure_6[4][4] = {
+    {0, 1, 0, 0},
+    {0, 1, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 0, 0}
+};
 
-//static int figure_7[4][4] = {
-//    {0, 1, 0, 0},
-//    {0, 1, 0, 0},
-//    {0, 1, 0, 0},
-//    {0, 1, 0, 0}
-//};
+static int figure_7[4][4] = {
+    {0, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 1, 0, 0}
+};
 
-Tetramino* CreateTetramino(int id)
+Tetramino* CreateTetramino()
 {
     Tetramino* figure = new Tetramino;
-    //    int randomFigure;
-    //    randomFigure = rand() % 7 + 1;
+    int nextFigure;
+    srand(time(NULL));
+    nextFigure = rand() % 7 + 1;
+
+    figure->position.x = 30;
+    figure->position.y = 1;
+
+    switch (nextFigure) {
+        case 1: memcpy(figure->figure, figure_1, sizeof(figure_1));
+            break;
+        case 2: memcpy(figure->figure, figure_2, sizeof(figure_2));
+            break;
+        case 3: memcpy(figure->figure, figure_3, sizeof(figure_3));
+            break;
+        case 4: memcpy(figure->figure, figure_4, sizeof(figure_4));
+            break;
+        case 5: memcpy(figure->figure, figure_5, sizeof(figure_5));
+            break;
+        case 6: memcpy(figure->figure, figure_6, sizeof(figure_6));
+            break;
+        case 7: memcpy(figure->figure, figure_7, sizeof(figure_7));
+            break;
+        }
 
 //    Point a[4];
 //    int n = 4;
@@ -78,30 +90,7 @@ Tetramino* CreateTetramino(int id)
 //        a[i].y = figure->figures[n][i] / 2;
 //    }
 
-    figure->position.x = 30;
-    figure->position.y = 1;
-
-    memcpy(figure->figure, figure_1, sizeof(figure_1));
-
     return figure;
-
-    switch (id) {
-    //    case 1: memcpy(figure->figure, figure_1, sizeof(figure_1));
-    //        break;
-    //    case 2: tetramino->figure_2;
-    //        break;
-    //    case 3: tetramino->figure_3;
-    //        break;
-    //    case 4: tetramino->figure_4;
-    //        break;
-    //    case 5: tetramino->figure_5;
-    //        break;
-    //    case 6: tetramino->figure_6;
-    //        break;
-    //    case 7: tetramino->figure_7;
-    //        break;
-    //    }
-    }
 }
 
 void DestroyTetramino(Tetramino* tetramino)
@@ -127,7 +116,7 @@ void PrintTetramino(Tetramino* tetramino)
 
     for (int i = 0; i < 4; ++i){
         for (int j = 0; j < 4; ++j){
-            if (tetramino->figure[i][j] > 0){
+            if (tetramino->figure[j][i] > 0){
                 int x = tetramino->position.x + i;
                 int y = tetramino->position.y + j;
                 move(y, x);
