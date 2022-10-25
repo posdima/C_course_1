@@ -51,7 +51,6 @@ void putDisplay(Display* disp, int** matrix, int row, int column)
     for(int i = 0; i < column; ++i){
         for(int j = 0; j < row; ++j){
             disp->dmatrix[j][i] = '%';
-
 //                    matrix[column][row];
         }
     }
