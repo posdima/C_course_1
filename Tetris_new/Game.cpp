@@ -1,72 +1,57 @@
+#include "Board.h"
+#include "Control.h"
 #include "Display.h"
 #include "Game.h"
-#include <curses.h>
 
 GameState RunGameSubModules(Game* game)
 {
+    GameState ret;
+
     if (!game)
     {
-        return MENU;
+        return GameState::MENU;
     }
 
-    int ch = getch();
-
+    ControlKey ch = getControl();
+    
     switch (game->state)
     {
-    case MENU:
-        Menu::MenuKey menuKey;
-        putDisplay(game->display, (int**)game->menu->mmatrix, Menu::YMAX, Menu::XMAX);
-        showDisplay(game->display);
-        switch(ch)
+        case GameState::MENU:
         {
-        case KEY_UP:
-            menuKey = Menu::UP;
-            break;
-        case KEY_DOWN:
-            menuKey = Menu::DOWN;
-            break;
-        case 10:
-            menuKey = Menu::ENTER;
-            break;
-        default:
-            return game->state;
-        }
-        return RunMenu(game->menu, menuKey);
+            ret = RunMenu(game->menu, ch);
+            putDisplay(game->display, (char*)game->menu->mmatrix, Menu::YMAX, Menu::XMAX);
+        } break;
 
-//    case BOARD:
-//    {
-//        switch(ch)
-//        {
-//        case 27:
-//            return RunBoard(game->board, Board::ESC);
-//        case KEY_DOWN:
-//            direction = Tetramino::DOWN;
-//            break;
-//        case KEY_LEFT:
-//            direction = Tetramino::LEFT;
-//            break;
-//        case KEY_RIGHT:
-//            direction = Tetramino::RIGHT;
-//            break;
-//        case -1:
-//            break;
-//        default:
-//            return game->state;
-//        }
-//    }
-    case EXIT:
-        return game->state;
+        case GameState::BOARD:
+        {
+            if (game->menu->newGame == true)
+            {
+                game->menu->newGame = false;
+                ResetBoard(game->board);
+            }
+            ret = RunBoard(game->board, ch);
+            putDisplay(game->display, (char*)game->board->bmatrix, Board::YMAX, Board::XMAX);
+        } break;
+
+        case GameState::EXIT:
+        default:
+        {
+            ret = game->state;
+        }
     }
-        return game->state;
+
+    showDisplay(game->display);
+    return ret;
 }
 
 Game* CreateGame()
 {
-    Game* game = new Game;
-    game->state = MENU;
-//    game->board = CreateBoard(game->gameSize);
-    game->menu = CreateMenu();
+    Game *game = new Game;
+    
+    game->state = GameState::MENU;
     game->display = createDisplay();
+    game->board = CreateBoard();
+    game->menu = CreateMenu();
 
     return game;
 }
@@ -79,8 +64,8 @@ void DestroyGame(Game* game)
     }
 
     DestroyMenu(game->menu);
+    DestroyBoard(game->board);
     DestroyDisplay(game->display);
-//    DestroyBoard(game->board);
     delete game;
 }
 

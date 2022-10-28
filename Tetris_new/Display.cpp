@@ -7,7 +7,7 @@ Display* createDisplay()
 
     for(int i = 0; i < Display::XMAX; ++i){
         for(int j = 0; j < Display::YMAX; ++j){
-            disp->dmatrix[i][j] = 'x';
+            disp->dmatrix[i][j] = 'D';
         }
     }
 
@@ -15,7 +15,7 @@ Display* createDisplay()
     keypad(stdscr, TRUE); // включить работу с непечатными символами (стрелками)
     curs_set(0); // Убрать мигающий курсор
 
-    halfdelay(1);
+    halfdelay(4);
     start_color();
 
     return disp;
@@ -31,7 +31,7 @@ void clearDisplay(Display* disp)
 {
     for(int i = 0; i < Display::XMAX; ++i){
         for(int j = 0; j < Display::YMAX; ++j){
-            disp->dmatrix[i][j] = ' ';
+            disp->dmatrix[i][j] = 'C';
         }
     }
 }
@@ -46,17 +46,12 @@ void showDisplay(Display* disp)
     }
 }
 
-void putDisplay(Display* disp, int** matrix, int row, int column)
+void putDisplay(Display* disp, char* matrix, int row, int column)
 {
-    for(int i = 0; i < column; ++i){
-        for(int j = 0; j < row; ++j){
-            disp->dmatrix[j][i] = '%';
-//                    matrix[column][row];
+    for(int y = 0; y < row; ++y){
+        for(int x = 0; x < column; ++x){
+            char src = *(matrix + column * y + x) ;
+            disp->dmatrix[y][x] = src;
         }
     }
-
-
-
 }
-
-

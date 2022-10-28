@@ -13,6 +13,6 @@ Display* createDisplay();
 void DestroyDisplay(Display*);
 void clearDisplay(Display*);
 void showDisplay(Display*);
-void putDisplay(Display*, int** matrix, int row, int column);
+void putDisplay(Display*, char* matrix, int row, int column);
 
 #endif // DISPLAY_H

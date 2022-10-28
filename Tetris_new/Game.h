@@ -1,18 +1,17 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "Board.h"
 #include "Display.h"
-//#include "Board.h"
 #include "GameState.h"
 #include "Menu.h"
 
 struct Game
 {
     GameState state;
-    GameSize gameSize;
-//    Board* board;
-    Menu* menu;
-    Display* display;
+    Display *display;
+    Board *board;
+    Menu *menu;
 };
 
 Game* CreateGame();
