@@ -44,9 +44,9 @@ static int isMoveRightPossible(Board* board, Tetramino *tetr)
 
 static int isMoveDownPossible(Board* board, Tetramino *tetr)
 {
-    int bottomY = tetr->ypos + Tetramino::XYMAX - 1; // figure bottom line
-    if (bottomY == Board::XMAX - 1) // if figure stay on the bottom line of the board
-        return 0;
+    //int bottomY = tetr->ypos + Tetramino::XYMAX - 1; // figure bottom line
+    //if (bottomY == Board::XMAX - 1) // if figure stay on the bottom line of the board
+        //return 0;
     
     // Check that we are hangs in bricks from bottom side
     for(int x = Tetramino::XYMAX - 1; x >=0; --x) {

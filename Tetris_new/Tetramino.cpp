@@ -5,9 +5,9 @@
 
 static int figure_1[Tetramino::XYMAX][Tetramino::XYMAX] = {
     {0, 0, 0, 0},
+    {0, 1, 1, 0},
+    {0, 1, 1, 0},
     {0, 0, 0, 0},
-    {0, 1, 1, 0},
-    {0, 1, 1, 0},
 };
 
 static int figure_2[Tetramino::XYMAX][Tetramino::XYMAX] = {
@@ -73,17 +73,16 @@ void RandomizeTetramino(Tetramino *tetr)
         case 7: memcpy(tetr->figure, figure_7, sizeof(figure_7));
             break;
         }
-
 }
 
 void RotateTetramino(Tetramino *tetr)
 {
-    Tetramino tmp;
+    Tetramino temp;
     for(int y = 0; y < Tetramino::XYMAX; ++y) {
         for(int x = 0; x < Tetramino::XYMAX; ++x)
-            tmp.figure[x][y] = tetr->figure[y][x];
+            temp.figure[x][y] = tetr->figure[Tetramino::XYMAX - 1 - y][x];
     }
-    memcpy(tetr->figure, tmp.figure, Tetramino::XYMAX * Tetramino::XYMAX * sizeof(tmp.figure[0][0]));
+    memcpy(tetr->figure, temp.figure, Tetramino::XYMAX * Tetramino::XYMAX * sizeof(temp.figure[0][0]));
 }
 
 int LeftBorderXabsTetramino(Tetramino *tetr)
