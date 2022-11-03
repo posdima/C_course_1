@@ -1,6 +1,8 @@
 #include "Board.h"
 #include "GameState.h"
+#include <curses.h>
 #include <memory.h>
+
 
 static int isMoveLeftPossible(Board* board, Tetramino *tetr)
 {
@@ -66,6 +68,25 @@ static int isMoveDownPossible(Board* board, Tetramino *tetr)
 
 static int isRotatePossible(Board* board, Tetramino *tetr)
 {
+    Tetramino tempBlock;
+    memcpy(&tempBlock, board->currentBlock, sizeof(Tetramino));
+    RotateTetramino(&tempBlock);
+
+    if (RightBorderXabsTetramino(&tempBlock) >= Board::XMAX)
+        return 0;
+
+    if (LeftBorderXabsTetramino(&tempBlock) < 0)
+        return 0;
+
+    for(int i = 0; i < Tetramino::XYMAX; ++i){ // put tetramino figure to outcome matrix
+        for(int j = 0; j < Tetramino::XYMAX; ++j){
+                if (tetr->figure[i][j] != 0)
+                {
+                    if (board->lmatrix[tetr->ypos + i][tetr->xpos + j] != ' ')
+                        return 0;
+                }
+        }
+    }
     return 1;
 }
 
@@ -86,7 +107,7 @@ static void composeBoard(Board* board, Tetramino *tetr)
     }
 }
 
-// It doesnt work now, check rotation functionality firstly
+// It doesnt work now,  multi line deletion doesnt work
 static void foldBoard(Board *board)
 {
     int foldCnt = 0;
@@ -105,12 +126,20 @@ static void foldBoard(Board *board)
         
         memcpy(&(board->lmatrix[y][0]), &(board->bmatrix[y - foldCnt][0]), Board::XMAX);
     }
+
+    while (foldCnt != 0)
+    {
+        memset(&(board->lmatrix[foldCnt - 1][0]), ' ', Board::XMAX);
+        foldCnt--;
+    }
+
+    memcpy(board->bmatrix, board->lmatrix, Board::XMAX * Board::YMAX);
 }
 
 static void resetTetramino(Tetramino *tetr)
 {
     RandomizeTetramino(tetr);
-    tetr->ypos = -(Tetramino::XYMAX);
+    tetr->ypos = -(Tetramino::XYMAX / 2);
     tetr->xpos = Board::XMAX / 2;
 }
 
@@ -124,6 +153,7 @@ Board* CreateBoard()
     brd->currentBlock = new Tetramino;
 
     ResetBoard(brd);
+
     return brd;
 }
 
@@ -184,8 +214,7 @@ GameState RunBoard(Board* board, ControlKey key)
     if (blockWasMoved) {
         composeBoard(board, &tempBlock);
     } else {
-        memcpy(board->lmatrix, board->bmatrix, Board::XMAX * Board::YMAX); // save bricks from tetramino to background
-        // foldBoard(board);
+        foldBoard(board);
         resetTetramino(board->currentBlock); // put tetramino on top and regenerate it
     }
 
