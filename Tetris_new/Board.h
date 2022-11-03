@@ -12,6 +12,12 @@ struct Board
 
     char bmatrix[YMAX][XMAX]; // matrix to show, brics and tetramino
     char lmatrix[YMAX][XMAX]; // matrix with brics only
+
+    static const int XSCR = 15;
+    static const int YSCR = 1;
+
+    char smatrix[YSCR][XSCR];
+
     Tetramino* currentBlock;
 };
 

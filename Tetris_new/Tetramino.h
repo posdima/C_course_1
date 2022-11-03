@@ -14,5 +14,6 @@ void RandomizeTetramino(Tetramino *tetr);
 void RotateTetramino(Tetramino *tetr);
 int LeftBorderXabsTetramino(Tetramino *tetr);
 int RightBorderXabsTetramino(Tetramino *tetr);
+int BottomBorderXabsTetramino(Tetramino *tetr);
 
 #endif // TETRAMINO_H

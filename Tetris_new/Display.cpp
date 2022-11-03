@@ -27,14 +27,14 @@ void DestroyDisplay(Display* disp)
     endwin();
 }
 
-void clearDisplay(Display* disp)
-{
-    for(int i = 0; i < Display::XMAX; ++i){
-        for(int j = 0; j < Display::YMAX; ++j){
-            disp->dmatrix[i][j] = 'C';
-        }
-    }
-}
+//void clearDisplay(Display* disp)
+//{
+//    for(int i = 0; i < Display::XMAX; ++i){
+//        for(int j = 0; j < Display::YMAX; ++j){
+//            disp->dmatrix[i][j] = 'C';
+//        }
+//    }
+//}
 
 void showDisplay(Display* disp)
 {
@@ -55,3 +55,23 @@ void putDisplay(Display* disp, char* matrix, int row, int column)
         }
     }
 }
+
+void putDisplayRight(Display* disp, char* matrix, int row, int column)
+{
+    for(int y = 2; y < 2 + row; ++y){
+        for(int x = 22; x < 22 + column; ++x){
+            char src = *(matrix + column * (y - 2) + (x - 22));
+            disp->dmatrix[y][x] = src;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@
 #include "GameState.h"
 #include <curses.h>
 #include <memory.h>
-
+#include <string.h>
 
 static int isMoveLeftPossible(Board* board, Tetramino *tetr)
 {
@@ -62,7 +62,6 @@ static int isMoveDownPossible(Board* board, Tetramino *tetr)
             }
         }
     }
-
     return 1;
 }
 
@@ -82,7 +81,8 @@ static int isRotatePossible(Board* board, Tetramino *tetr)
         for(int j = 0; j < Tetramino::XYMAX; ++j){
                 if (tetr->figure[i][j] != 0)
                 {
-                    if (board->lmatrix[tetr->ypos + i][tetr->xpos + j] != ' ')
+                    if ((board->lmatrix[tetr->ypos + i + 1][tetr->xpos + j + 1] == '#') ||
+                            (board->lmatrix[tetr->ypos + i - 1][tetr->xpos + j - 1] == '#'))
                         return 0;
                 }
         }
@@ -107,33 +107,39 @@ static void composeBoard(Board* board, Tetramino *tetr)
     }
 }
 
-// It doesnt work now,  multi line deletion doesnt work
+static char score[Board::XSCR];
+int realScore = 0;
+
 static void foldBoard(Board *board)
 {
-    int foldCnt = 0;
+    int array[Tetramino::XYMAX] = {};
+    int yIndex = 0;
 
-    for(int y = Board::YMAX - 1; y >= 0; --y) {
+    for(int y = 0; y < Board::YMAX; ++y) {
         int rowSum = 0;
         for(int x = 0; x < Board::XMAX; ++x) {
-            if (board->bmatrix[y][x] != ' ') {
+            if (board->bmatrix[y][x] == ' ') {
+                break;
+            }
+            else{
                 ++rowSum;
             }
         }
 
-        if (rowSum == Board::XMAX) {
-            ++foldCnt;
+        if (rowSum == Board::XMAX && yIndex < Tetramino::XYMAX){
+            array[yIndex] = y;
+            ++yIndex;
         }
-        
-        memcpy(&(board->lmatrix[y][0]), &(board->bmatrix[y - foldCnt][0]), Board::XMAX);
     }
 
-    while (foldCnt != 0)
-    {
-        memset(&(board->lmatrix[foldCnt - 1][0]), ' ', Board::XMAX);
-        foldCnt--;
+    for (int i = 0; i < Tetramino::XYMAX; ++i){
+        if (array[i] != 0){
+            memcpy(&(board->bmatrix[1][0]), &(board->bmatrix[0][0]), Board::XMAX * array[i]);
+            sprintf(score, " Score: %u", ++realScore);
+            memcpy(&(board->smatrix[0][0]), score, strlen(score));
+        }
     }
-
-    memcpy(board->bmatrix, board->lmatrix, Board::XMAX * Board::YMAX);
+    memcpy(board->lmatrix, board->bmatrix, Board::XMAX * Board::YMAX);
 }
 
 static void resetTetramino(Tetramino *tetr)
@@ -147,14 +153,20 @@ static void resetTetramino(Tetramino *tetr)
 /*********************************************************************************************************************/
 /*Public interface*/
 
+
+
 Board* CreateBoard()
 {
-    Board *brd = new Board;
-    brd->currentBlock = new Tetramino;
+    Board *board = new Board;
+    board->currentBlock = new Tetramino;
 
-    ResetBoard(brd);
+    ResetBoard(board);
+    realScore = 0;
+    memset(board->smatrix, ' ', 15);
+    sprintf(score, " Score: %u", realScore);
+    memcpy(&(board->smatrix[0][0]), score, strlen(score));
 
-    return brd;
+    return board;
 }
 
 void DestroyBoard(Board* board)
@@ -214,6 +226,9 @@ GameState RunBoard(Board* board, ControlKey key)
     if (blockWasMoved) {
         composeBoard(board, &tempBlock);
     } else {
+        if (tempBlock.ypos < 0){
+            return GameState::MENU;
+        }
         foldBoard(board);
         resetTetramino(board->currentBlock); // put tetramino on top and regenerate it
     }

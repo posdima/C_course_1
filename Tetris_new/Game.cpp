@@ -31,6 +31,7 @@ GameState RunGameSubModules(Game* game)
             }
             ret = RunBoard(game->board, ch);
             putDisplay(game->display, (char*)game->board->bmatrix, Board::YMAX, Board::XMAX);
+            putDisplayRight(game->display, (char*)game->board->smatrix, Board::YSCR, Board::XSCR);
         } break;
 
         case GameState::EXIT:

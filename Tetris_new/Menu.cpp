@@ -2,7 +2,6 @@
 #include <memory.h>
 #include <string.h>
 
-
 static const char *strStartGameSelect =   " * Start game * ";
 static const char *strStartGameEmpty  = "   Start game   ";
 static const char *strExitSelect = " * Exit * ";

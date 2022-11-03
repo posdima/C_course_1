@@ -14,5 +14,6 @@ void DestroyDisplay(Display*);
 void clearDisplay(Display*);
 void showDisplay(Display*);
 void putDisplay(Display*, char* matrix, int row, int column);
+void putDisplayRight(Display*, char* matrix, int row, int column);
 
 #endif // DISPLAY_H

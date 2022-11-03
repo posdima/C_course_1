@@ -55,7 +55,7 @@ static int figure_7[Tetramino::XYMAX][Tetramino::XYMAX] = {
 void RandomizeTetramino(Tetramino *tetr)
 {
     srand(time(NULL));
-    int index = rand() % 7 + 1;
+    int index = 7;//rand() % 7 + 1;
 
     switch (index) {
         case 1: memcpy(tetr->figure, figure_1, sizeof(figure_1));
@@ -105,4 +105,13 @@ int RightBorderXabsTetramino(Tetramino *tetr)
         }
     }
     return tetr->xpos;
+}
+
+int BottomBorderXabsTetramino(Tetramino *tetr)
+{
+
+
+
+
+    return 0;
 }
