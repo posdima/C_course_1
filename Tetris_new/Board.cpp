@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "Game.h"
 #include "GameState.h"
 #include <curses.h>
 #include <memory.h>
@@ -9,11 +10,14 @@ static int isMoveLeftPossible(Board* board, Tetramino *tetr)
     if (LeftBorderXabsTetramino(tetr) <= 0)
         return 0;
 
+    if (BottomBorderXabsTetramino(tetr) >= Board::YMAX - 1)
+        return 0;
+
     // check that we are stoped by bricks
     for(int x = 0; x < Tetramino::XYMAX; ++x) {
         for (int y = Tetramino::XYMAX - 1; y >= 0; --y) {
             if (tetr->figure[y][x] != 0) {
-                int ly = tetr->ypos + y; 
+                int ly = tetr->ypos + y;
                 int lx = tetr->xpos + x - 1; // look left for -1 by X
                 if (board->lmatrix[ly][lx] != ' ')
                     return 0;
@@ -27,6 +31,9 @@ static int isMoveLeftPossible(Board* board, Tetramino *tetr)
 static int isMoveRightPossible(Board* board, Tetramino *tetr)
 {
     if (RightBorderXabsTetramino(tetr) >= Board::XMAX - 1)
+        return 0;
+
+    if (BottomBorderXabsTetramino(tetr) >= Board::YMAX - 1)
         return 0;
 
     // check that we are stoped by bricks
@@ -46,10 +53,9 @@ static int isMoveRightPossible(Board* board, Tetramino *tetr)
 
 static int isMoveDownPossible(Board* board, Tetramino *tetr)
 {
-    //int bottomY = tetr->ypos + Tetramino::XYMAX - 1; // figure bottom line
-    //if (bottomY == Board::XMAX - 1) // if figure stay on the bottom line of the board
-        //return 0;
-    
+    if (BottomBorderXabsTetramino(tetr) >= Board::YMAX - 1)
+        return 0;
+
     // Check that we are hangs in bricks from bottom side
     for(int x = Tetramino::XYMAX - 1; x >=0; --x) {
         for(int y = Tetramino::XYMAX - 1; y >= 0; --y){
@@ -77,14 +83,17 @@ static int isRotatePossible(Board* board, Tetramino *tetr)
     if (LeftBorderXabsTetramino(&tempBlock) < 0)
         return 0;
 
+    if (BottomBorderXabsTetramino(&tempBlock) >= Board::YMAX - 1)
+        return 0;
+
     for(int i = 0; i < Tetramino::XYMAX; ++i){ // put tetramino figure to outcome matrix
         for(int j = 0; j < Tetramino::XYMAX; ++j){
-                if (tetr->figure[i][j] != 0)
-                {
-                    if ((board->lmatrix[tetr->ypos + i + 1][tetr->xpos + j + 1] == '#') ||
-                            (board->lmatrix[tetr->ypos + i - 1][tetr->xpos + j - 1] == '#'))
-                        return 0;
-                }
+            if (tetr->figure[i][j] != 0)
+            {
+                if ((board->lmatrix[tetr->ypos + i + 1][tetr->xpos + j + 1] == '#') ||
+                        (board->lmatrix[tetr->ypos + i - 1][tetr->xpos + j - 1] == '#'))
+                    return 0;
+            }
         }
     }
     return 1;
@@ -97,12 +106,12 @@ static void composeBoard(Board* board, Tetramino *tetr)
 
     for(int i = tetr->ypos; i < tetr->ypos + Tetramino::XYMAX; ++i){ // put tetramino figure to outcome matrix
         for(int j = tetr->xpos; j < tetr->xpos + Tetramino::XYMAX; ++j){
-                if (j < 0) // tetr->xpos could be -1 due to figure doesnt have bricks in column [0]
-                    continue;
-                if (tetr->figure[i-tetr->ypos][j - tetr->xpos] != 0)
-                {
-                    board->bmatrix[i][j] = '#';
-                }
+            if (j < 0) // tetr->xpos could be -1 due to figure doesnt have bricks in column [0]
+                continue;
+            if (tetr->figure[i-tetr->ypos][j - tetr->xpos] != 0)
+            {
+                board->bmatrix[i][j] = '#';
+            }
         }
     }
 }
@@ -135,7 +144,7 @@ static void foldBoard(Board *board)
     for (int i = 0; i < Tetramino::XYMAX; ++i){
         if (array[i] != 0){
             memcpy(&(board->bmatrix[1][0]), &(board->bmatrix[0][0]), Board::XMAX * array[i]);
-            sprintf(score, " Score: %u", ++realScore);
+            sprintf(score, " Score: %u", realScore += 10);
             memcpy(&(board->smatrix[0][0]), score, strlen(score));
         }
     }
@@ -152,8 +161,6 @@ static void resetTetramino(Tetramino *tetr)
 /*Local functions*/
 /*********************************************************************************************************************/
 /*Public interface*/
-
-
 
 Board* CreateBoard()
 {
@@ -207,14 +214,17 @@ GameState RunBoard(Board* board, ControlKey key)
             RotateTetramino(&tempBlock);
             blockWasMoved = true;
         }
+
     case ControlKey::DOWN:
         break;
+
     case ControlKey::LEFT:
         if (isMoveLeftPossible(board, &tempBlock)) {
             tempBlock.xpos--;
             blockWasMoved = true;
         }
         break;
+
     case ControlKey::RIGHT:
         if (isMoveRightPossible(board, &tempBlock)) {
             tempBlock.xpos++;
@@ -225,13 +235,13 @@ GameState RunBoard(Board* board, ControlKey key)
 
     if (blockWasMoved) {
         composeBoard(board, &tempBlock);
-    } else {
+    }
+    else {
         if (tempBlock.ypos < 0){
-            return GameState::MENU;
+            return GameState::GameOver;
         }
         foldBoard(board);
         resetTetramino(board->currentBlock); // put tetramino on top and regenerate it
     }
-
     return GameState::BOARD;
 }

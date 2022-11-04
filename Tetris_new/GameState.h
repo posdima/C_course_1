@@ -5,7 +5,8 @@ enum GameState
 {
     MENU,
     BOARD,
-    EXIT
+    EXIT,
+    GameOver
 };
 
 struct GameSize

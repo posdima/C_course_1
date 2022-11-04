@@ -4,7 +4,7 @@
 struct Display
 {
     static const int XMAX = 22;
-    static const int YMAX = 50;
+    static const int YMAX = 72;
 
     char dmatrix[XMAX][YMAX];
 };

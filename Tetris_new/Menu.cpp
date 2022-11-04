@@ -27,8 +27,8 @@ static void toggleCurrentPoint(Menu* menu)
     if (menu->currentPoint == Menu::MenuPoint::START_GAME)
     {
         setCurrentPoint(menu, Menu::MenuPoint::EXIT);
-    } 
-    else 
+    }
+    else
     {
         setCurrentPoint(menu, Menu::MenuPoint::START_GAME);
     }

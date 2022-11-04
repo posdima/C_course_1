@@ -16,29 +16,36 @@ GameState RunGameSubModules(Game* game)
     
     switch (game->state)
     {
-        case GameState::MENU:
-        {
-            ret = RunMenu(game->menu, ch);
-            putDisplay(game->display, (char*)game->menu->mmatrix, Menu::YMAX, Menu::XMAX);
-        } break;
+    case GameState::MENU:
+    {
+        ret = RunMenu(game->menu, ch);
+        putDisplay(game->display, (char*)game->menu->mmatrix, Menu::YMAX, Menu::XMAX);
+    } break;
 
-        case GameState::BOARD:
+    case GameState::BOARD:
+    {
+        if (game->menu->newGame == true)
         {
-            if (game->menu->newGame == true)
-            {
-                game->menu->newGame = false;
-                ResetBoard(game->board);
-            }
-            ret = RunBoard(game->board, ch);
-            putDisplay(game->display, (char*)game->board->bmatrix, Board::YMAX, Board::XMAX);
-            putDisplayRight(game->display, (char*)game->board->smatrix, Board::YSCR, Board::XSCR);
-        } break;
-
-        case GameState::EXIT:
-        default:
-        {
-            ret = game->state;
+            game->menu->newGame = false;
+            ResetBoard(game->board);
         }
+        ret = RunBoard(game->board, ch);
+        putDisplay(game->display, (char*)game->board->bmatrix, Board::YMAX, Board::XMAX);
+        putDisplayRight(game->display, (char*)game->board->smatrix, Board::YSCR, Board::XSCR);
+    } break;
+
+    case GameState::GameOver:
+    {
+        ret = game->state;
+        clearDisplay(game->display);
+        putDisplay(game->display, (char*)game->board->gmatrix, Board::YGOVER, Board::XGOVER);
+    } break;
+
+    case GameState::EXIT:
+    default:
+    {
+        ret = game->state;
+    }
     }
 
     showDisplay(game->display);
